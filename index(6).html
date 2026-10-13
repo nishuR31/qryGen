@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1020">
+  <meta name="description" content="Generate, customize, and download crisp QR codes from text, links, or a shareable qrygen.vercel.app/value route.">
+  <meta property="og:title" content="QryGen — QR Code Studio">
+  <meta property="og:description" content="Turn text and links into customizable QR codes in seconds.">
+  <meta property="og:type" content="website">
+  <title>QryGen — QR Code Studio</title>
+  <link rel="icon" href="/logo.png" type="image/png">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+  <style>
+    :root{color-scheme:dark;--bg:#080d1a;--panel:rgba(18,26,46,.82);--panel2:#111a2e;--text:#f4f7ff;--muted:#a2aec8;--line:rgba(174,190,225,.17);--accent:#7c8cff;--accent2:#42d6c5;--shadow:0 24px 80px rgba(0,0,0,.35)}
+    *{box-sizing:border-box}html{min-height:100%;scroll-behavior:smooth}body{margin:0;min-height:100vh;background:var(--bg);color:var(--text);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;overflow-x:hidden}
+    body:before,body:after{content:"";position:fixed;pointer-events:none;z-index:-1;border-radius:50%;filter:blur(75px);opacity:.27}body:before{width:420px;height:420px;left:-150px;top:-140px;background:#5865f2}body:after{width:400px;height:400px;right:-170px;bottom:-150px;background:#11b8a7}
+    button,input,textarea,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid color-mix(in srgb,var(--accent) 70%,white);outline-offset:3px}
+    .shell{width:min(1100px,calc(100% - 36px));margin:0 auto;padding:25px 0 30px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:54px}.brand{display:flex;align-items:center;gap:11px;font-size:20px;font-weight:800;letter-spacing:-.6px}.brandmark{display:grid;place-items:center;width:39px;height:39px;border-radius:13px;background:linear-gradient(135deg,#8793ff,#53dfcf);color:#09101e;box-shadow:0 8px 26px #7c8cff35}.brandmark svg{width:22px}.top-actions{display:flex;align-items:center;gap:9px}.chip,.icon-btn{border:1px solid var(--line);background:rgba(255,255,255,.045);color:var(--text);border-radius:12px;padding:9px 12px}.chip{font-size:12px;color:var(--muted)}.icon-btn{width:42px;height:42px;display:grid;place-items:center}.icon-btn svg{width:18px}
+    .hero{text-align:center;max-width:700px;margin:0 auto 34px;animation:rise .6s ease both}.eyebrow{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:rgba(255,255,255,.04);border-radius:999px;padding:6px 12px;color:#c2caff;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}.dot{width:7px;height:7px;background:var(--accent2);border-radius:50%;box-shadow:0 0 12px var(--accent2)}h1{font-size:clamp(36px,6vw,64px);line-height:1.02;letter-spacing:-.055em;margin:19px 0 15px;font-weight:850}.gradient{background:linear-gradient(100deg,#aab3ff 10%,#6fe6d5 80%);background-clip:text;-webkit-background-clip:text;color:transparent}.hero p{color:var(--muted);font-size:clamp(15px,2vw,18px);margin:0 auto;max-width:570px}
+    .workspace{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(300px,.92fr);gap:18px;align-items:stretch}.panel{border:1px solid var(--line);background:var(--panel);backdrop-filter:blur(22px);border-radius:24px;box-shadow:var(--shadow);overflow:hidden;animation:rise .65s ease both}.panel:nth-child(2){animation-delay:.08s}.panel-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:21px 23px;border-bottom:1px solid var(--line)}.panel-head h2{font-size:15px;margin:0;font-weight:750}.step{font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}.panel-body{padding:23px}.field-label{display:flex;justify-content:space-between;gap:10px;margin:0 0 9px;font-size:13px;font-weight:700}.hint{font-size:11px;color:var(--muted);font-weight:500}.input-wrap{position:relative}.input-wrap textarea{display:block;width:100%;min-height:116px;resize:vertical;border:1px solid var(--line);background:rgba(4,9,21,.62);border-radius:15px;padding:15px 15px;color:var(--text);line-height:1.55;overflow-wrap:anywhere}.input-wrap textarea::placeholder{color:#71809e}.input-meta{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:11px;margin-top:7px}.quick-row{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 20px}.mini-btn{border:1px solid var(--line);background:rgba(255,255,255,.04);color:#c9d3ec;border-radius:9px;padding:7px 10px;font-size:12px;transition:background .2s,border .2s,transform .2s}.mini-btn:hover{background:rgba(124,140,255,.13);border-color:#7c8cff70;transform:translateY(-1px)}
+    .options{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-bottom:18px}.option label{display:block;color:var(--muted);font-size:12px;margin-bottom:7px}.option select,.option input[type=color]{width:100%;height:42px;border:1px solid var(--line);background:rgba(4,9,21,.62);border-radius:11px;padding:0 11px;color:var(--text)}.option input[type=color]{padding:5px}.swatches{display:flex;gap:8px;margin:8px 0 19px}.swatch{width:28px;height:28px;border-radius:9px;border:2px solid rgba(255,255,255,.2);box-shadow:inset 0 0 0 2px #0e1527;transition:transform .18s}.swatch:hover{transform:scale(1.12)}.swatch[aria-pressed=true]{outline:2px solid var(--text);outline-offset:2px}.toggle-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--line);color:#dce4fa;font-size:13px}.toggle-row small{display:block;color:var(--muted);font-size:11px;margin-top:2px}.switch{appearance:none;width:39px;height:23px;border-radius:999px;background:#39435b;position:relative;flex:none;transition:background .2s}.switch:before{content:"";position:absolute;width:17px;height:17px;top:3px;left:3px;background:white;border-radius:50%;transition:transform .2s}.switch:checked{background:var(--accent)}.switch:checked:before{transform:translateX(16px)}
+    .button-row{display:flex;gap:10px;margin-top:20px}.btn{border:0;border-radius:12px;padding:12px 16px;font-weight:750;display:inline-flex;align-items:center;justify-content:center;gap:9px;transition:transform .18s,filter .18s,box-shadow .18s}.btn:hover{transform:translateY(-2px);filter:brightness(1.07)}.btn:active{transform:translateY(0)}.btn svg{width:17px;height:17px}.primary{flex:1;background:linear-gradient(110deg,#8994ff,#6c7af0);color:#090f21;box-shadow:0 8px 25px #7885ff30}.secondary{background:rgba(255,255,255,.06);color:var(--text);border:1px solid var(--line)}.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+    .preview-body{padding:22px;display:flex;flex-direction:column;min-height:100%}.preview-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}.status{display:inline-flex;align-items:center;gap:7px;font-size:11px;color:#83e4d2;background:#2bd5b31a;border:1px solid #2bd5b32d;padding:6px 9px;border-radius:999px}.status:before{content:"";width:6px;height:6px;border-radius:50%;background:#55dfc5}.format{font-size:11px;color:var(--muted)}.qr-stage{position:relative;display:grid;place-items:center;min-height:300px;flex:1;border:1px solid var(--line);border-radius:19px;background:radial-gradient(circle at 50% 42%,rgba(124,140,255,.13),transparent 55%),rgba(3,8,19,.4);overflow:hidden;padding:24px}.qr-stage:before,.qr-stage:after{content:"";position:absolute;width:23px;height:23px;border-color:var(--accent);opacity:.65}.qr-stage:before{top:13px;left:13px;border-top:2px solid;border-left:2px solid;border-radius:5px 0 0}.qr-stage:after{bottom:13px;right:13px;border-bottom:2px solid;border-right:2px solid;border-radius:0 0 5px 0}.qr-paper{display:grid;place-items:center;background:#fff;padding:13px;border-radius:14px;box-shadow:0 14px 40px #0004;max-width:100%;animation:qrIn .35s ease both}.qr-paper canvas,.qr-paper img{display:block;max-width:100%;height:auto!important;image-rendering:pixelated}.qr-empty{color:#8592ad;text-align:center;max-width:220px;font-size:13px}.qr-empty svg{width:54px;height:54px;margin-bottom:10px;opacity:.65}.payload{margin-top:15px;padding:12px 13px;background:rgba(255,255,255,.035);border:1px solid var(--line);border-radius:12px}.payload-label{font-size:10px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}.payload-value{font-size:12px;color:#dbe3fa;overflow-wrap:anywhere;max-height:56px;overflow:auto}.preview-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}.preview-actions .btn{padding:11px 10px;font-size:12px}.route-note{margin-top:13px;font-size:11px;color:var(--muted);line-height:1.55}.route-note code{color:#c6ceff;background:#7c8cff17;padding:2px 5px;border-radius:5px}
+    .feature-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}.feature{display:flex;align-items:flex-start;gap:11px;padding:15px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.025)}.feature-icon{display:grid;place-items:center;width:34px;height:34px;border-radius:11px;background:#7c8cff17;color:#aab3ff;flex:none}.feature-icon svg{width:17px}.feature strong{display:block;font-size:12px;margin:1px 0 3px}.feature span{display:block;font-size:11px;color:var(--muted);line-height:1.45}.footer{display:flex;justify-content:space-between;gap:15px;align-items:center;margin-top:35px;color:#7f8ba6;font-size:11px}.footer a{color:#aeb8d3;text-decoration:none}.footer a:hover{color:var(--text)}.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:#e8edff;color:#11172a;padding:10px 15px;border-radius:12px;font-size:13px;font-weight:700;box-shadow:0 10px 35px #0005;transition:.25s;z-index:5;max-width:calc(100% - 24px);text-align:center}.toast.show{opacity:1;transform:translate(-50%,0)}.light{--bg:#f0f3ff;--panel:rgba(255,255,255,.83);--panel2:#fff;--text:#18213b;--muted:#64708c;--line:rgba(60,77,125,.17);--shadow:0 24px 70px rgba(43,58,104,.12)}.light body:before,.light body:after{opacity:.18}.light .input-wrap textarea,.light .option select,.light .option input[type=color]{background:rgba(244,246,255,.9);color:var(--text)}.light .qr-stage{background:radial-gradient(circle at 50% 42%,rgba(124,140,255,.12),transparent 55%),rgba(238,242,255,.8)}.light .mini-btn,.light .secondary,.light .icon-btn{color:var(--text);background:rgba(40,55,100,.04)}.light .payload-value{color:var(--text)}.light .feature{background:rgba(255,255,255,.5)}
+    @keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}@keyframes qrIn{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:scale(1)}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+    @media(max-width:800px){.topbar{margin-bottom:40px}.workspace{grid-template-columns:1fr}.preview-body{min-height:auto}.qr-stage{min-height:290px}.feature-strip{grid-template-columns:1fr}.feature{align-items:center}.feature span{font-size:12px}}
+    @media(max-width:480px){.shell{width:min(100% - 22px,1100px);padding-top:13px}.topbar{margin-bottom:32px}.brand{font-size:18px}.chip{display:none}.hero{margin-bottom:25px}h1{font-size:39px}.panel{border-radius:19px}.panel-head{padding:17px 17px}.panel-body,.preview-body{padding:17px}.options{gap:10px}.qr-stage{min-height:260px;padding:18px}.button-row{flex-direction:column}.button-row .btn{width:100%}.footer{flex-direction:column;text-align:center;margin-top:26px}}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="QryGen home" style="text-decoration:none;color:inherit">
+        <span class="brandmark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v3M14 20h3M20 20h1"/></svg></span>
+        qrygen<span style="color:var(--accent2)">.</span>
+      </a>
+      <div class="top-actions"><span class="chip">QR CODE STUDIO · FREE</span><button class="icon-btn" id="themeToggle" aria-label="Toggle light and dark theme" title="Toggle theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg></button></div>
+    </header>
+    <section class="hero">
+      <span class="eyebrow"><span class="dot"></span> Scan into something useful</span>
+      <h1>Your link, <span class="gradient">made scannable.</span></h1>
+      <p>Create clean, high-contrast QR codes for links, text, and more. Customize the look, then download a crisp PNG.</p>
+    </section>
+    <section class="workspace" aria-label="QR code generator">
+      <article class="panel">
+        <div class="panel-head"><h2>Build your QR code</h2><span class="step">01 / CUSTOMIZE</span></div>
+        <div class="panel-body">
+          <label class="field-label" for="value">Text or destination URL <span class="hint" id="modeHint">Live preview</span></label>
+          <div class="input-wrap"><textarea id="value" maxlength="4000" placeholder="Paste a URL or type any text…"></textarea></div>
+          <div class="input-meta"><span id="charCount">0 / 4000 characters</span><span id="inputState">Ready when you are</span></div>
+          <div class="quick-row"><button class="mini-btn" type="button" data-example="https://qrygen.vercel.app">QryGen home</button><button class="mini-btn" type="button" data-example="https://example.com">Example URL</button><button class="mini-btn" type="button" id="clearBtn">Clear input</button></div>
+          <div class="options">
+            <div class="option"><label for="size">Output size</label><select id="size"><option value="192">Small · 192px</option><option value="256" selected>Medium · 256px</option><option value="384">Large · 384px</option><option value="512">Extra large · 512px</option></select></div>
+            <div class="option"><label for="correction">Error correction</label><select id="correction"><option value="L">Low · compact</option><option value="M">Medium</option><option value="Q">Quartile</option><option value="H" selected>High · robust</option></select></div>
+            <div class="option"><label for="foreground">QR color</label><input type="color" id="foreground" value="#10182c"></div>
+            <div class="option"><label for="background">Background color</label><input type="color" id="background" value="#ffffff"></div>
+          </div>
+          <div class="field-label"><span>Quick color palettes</span><span class="hint">Tap to apply</span></div>
+          <div class="swatches" aria-label="Color palettes">
+            <button class="swatch" style="background:linear-gradient(135deg,#10182c 50%,#fff 50%)" data-fg="#10182c" data-bg="#ffffff" aria-label="Midnight palette" aria-pressed="true"></button>
+            <button class="swatch" style="background:linear-gradient(135deg,#123c35 50%,#f1fff8 50%)" data-fg="#123c35" data-bg="#f1fff8" aria-label="Forest palette" aria-pressed="false"></button>
+            <button class="swatch" style="background:linear-gradient(135deg,#53245f 50%,#fff3ff 50%)" data-fg="#53245f" data-bg="#fff3ff" aria-label="Orchid palette" aria-pressed="false"></button>
+            <button class="swatch" style="background:linear-gradient(135deg,#873b18 50%,#fff8eb 50%)" data-fg="#873b18" data-bg="#fff8eb" aria-label="Amber palette" aria-pressed="false"></button>
+            <button class="swatch" style="background:linear-gradient(135deg,#153e7e 50%,#eff7ff 50%)" data-fg="#153e7e" data-bg="#eff7ff" aria-label="Ocean palette" aria-pressed="false"></button>
+          </div>
+          <div class="toggle-row"><div><strong>Auto-generate</strong><small>Refresh the QR as you type</small></div><input class="switch" id="autoGenerate" type="checkbox" checked aria-label="Auto-generate QR"></div>
+          <div class="toggle-row"><div><strong>Soft preview glow</strong><small>Add a subtle color aura behind the code</small></div><input class="switch" id="glow" type="checkbox" checked aria-label="Toggle preview glow"></div>
+          <div class="button-row"><button class="btn primary" id="generateBtn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6 2.1 2.1m0-12.8-2.1 2.1m-8.6 8.6-2.1 2.1"/><circle cx="12" cy="12" r="5"/></svg>Generate QR code</button><button class="btn secondary" id="shareBtn" type="button" title="Copy a shareable route for this value"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.7 10.7 6.6-4.4m-6.6 7 6.6 4.4"/></svg>Share route</button></div>
+        </div>
+      </article>
+      <article class="panel">
+        <div class="panel-head"><h2>Your QR preview</h2><span class="step">02 / EXPORT</span></div>
+        <div class="preview-body">
+          <div class="preview-top"><span class="status" id="status">QR ready</span><span class="format" id="formatLabel">PNG · 256 × 256</span></div>
+          <div class="qr-stage" id="qrStage"><div class="qr-paper" id="qrPaper"><div class="qr-empty" id="qrEmpty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v3M14 20h3M20 20h1"/></svg><div>Your QR code will appear here</div><div style="font-size:11px;margin-top:4px">Enter a value to get started</div></div><div id="qrcode" aria-label="Generated QR code"></div></div></div>
+          <div class="payload"><div class="payload-label">Encoded content</div><div class="payload-value" id="payloadValue">No content yet</div></div>
+          <div class="preview-actions"><button class="btn primary" id="downloadBtn" type="button" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m-5-5 5 5 5-5M4 17v3h16v-3"/></svg>Download PNG</button><button class="btn secondary" id="copyBtn" type="button" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg>Copy content</button></div>
+          <p class="route-note" id="routeNote">Tip: open <code>qrygen.vercel.app/value</code> to generate a QR containing that full route URL. Route-based QR generation requires your host to rewrite unknown paths to this index.html.</p>
+        </div>
+      </article>
+    </section>
+    <section class="feature-strip" aria-label="Features">
+      <div class="feature"><span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v18m-9-9h18"/><circle cx="12" cy="12" r="8"/></svg></span><div><strong>Instant preview</strong><span>Live updates while typing, with manual generation available too.</span></div></div>
+      <div class="feature"><span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3 4 6v5c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6z"/><path d="m8.5 12 2.2 2.2 4.8-5"/></svg></span><div><strong>Scan-friendly output</strong><span>High error correction, quiet margins, and contrast-conscious defaults.</span></div></div>
+      <div class="feature"><span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v12m-5-5 5 5 5-5M4 17v3h16v-3"/></svg></span><div><strong>Export in one click</strong><span>Download a PNG or copy the encoded value without leaving the page.</span></div></div>
+    </section>
+    <footer class="footer"><span>© <span id="year"></span> QryGen. Made for quick sharing.</span><span>Keep QR foreground and background high contrast for reliable scanning.</span></footer>
+  </main>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script>
+    (() => {
+      const $ = id => document.getElementById(id);
+      const valueInput = $('value'), qrRoot = $('qrcode'), qrPaper = $('qrPaper');
+      let qr = null, lastValue = '', debounce = null, toastTimer = null;
+      const params = new URLSearchParams(location.search);
+      // A pathname segment is a share route: /some%20value. Encode the complete current URL,
+      // so scanning the generated QR opens the same share route on this site.
+      function routeValue() {
+        const path = location.pathname.replace(/^\/+|\/+$/g, '');
+        if (!path || path === 'index.html') return '';
+        try { return location.origin + '/' + path; }
+        catch { return location.href; }
+      }
+      const pathPayload = routeValue();
+      const queryPayload = params.get('text') || params.get('value') || '';
+      const initialPayload = pathPayload || queryPayload || '';
+      if (initialPayload) {
+        valueInput.value = initialPayload;
+        $('modeHint').textContent = pathPayload ? 'Share route detected' : 'URL parameter detected';
+        $('routeNote').innerHTML = pathPayload
+          ? 'Route mode: this QR encodes the complete current URL, so scanning it opens this same route. To encode the route value as plain text instead, paste that value into the input on the home page.'
+          : 'Loaded from a <code>?text=</code> or <code>?value=</code> URL parameter.';
+      }
+      $('year').textContent = new Date().getFullYear();
+      function toast(message) {
+        const el = $('toast'); el.textContent = message; el.classList.add('show');
+        clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove('show'), 2300);
+      }
+      function setStatus(message, ready = true) {
+        $('status').textContent = message;
+        $('status').style.color = ready ? '#83e4d2' : '#ffbf86';
+      }
+      function getCanvas() {
+        const canvas = qrRoot.querySelector('canvas');
+        if (canvas) return canvas;
+        const img = qrRoot.querySelector('img');
+        if (!img) return null;
+        const c = document.createElement('canvas');
+        const size = Number($('size').value); c.width = size; c.height = size;
+        const ctx = c.getContext('2d');
+        try { ctx.drawImage(img, 0, 0, size, size); return c; } catch { return null; }
+      }
+      function generate(showToast = false) {
+        const payload = valueInput.value;
+        $('charCount').textContent = `${payload.length} / 4000 characters`;
+        $('inputState').textContent = payload ? `${payload.length} character${payload.length === 1 ? '' : 's'}` : 'Waiting for input';
+        if (!payload.trim()) {
+          qrRoot.replaceChildren(); $('qrEmpty').style.display = 'block';
+          $('payloadValue').textContent = 'No content yet'; $('downloadBtn').disabled = true; $('copyBtn').disabled = true;
+          setStatus('Waiting for input', false); lastValue = ''; qr = null;
+          return;
+        }
+        if (typeof QRCode === 'undefined') {
+          setStatus('QR library unavailable', false);
+          $('payloadValue').textContent = payload;
+          if (showToast) toast('QR library did not load. Check your connection and reload.');
+          return;
+        }
+        const size = Number($('size').value);
+        qrRoot.replaceChildren(); $('qrEmpty').style.display = 'none';
+        qrPaper.style.background = $('background').value;
+        qrPaper.style.padding = '13px';
+        $('qrStage').style.background = $('glow').checked
+          ? `radial-gradient(circle at 50% 42%, ${$('foreground').value}22, transparent 58%), rgba(3,8,19,.4)`
+          : 'rgba(3,8,19,.4)';
+        try {
+          qr = new QRCode(qrRoot, {
+            text: payload, width: size, height: size,
+            colorDark: $('foreground').value, colorLight: $('background').value,
+            correctLevel: QRCode.CorrectLevel[$('correction').value]
+          });
+          lastValue = payload; $('payloadValue').textContent = payload;
+          $('formatLabel').textContent = `PNG · ${size} × ${size}`;
+          $('downloadBtn').disabled = false; $('copyBtn').disabled = false;
+          setStatus('QR ready', true);
+          if (showToast) toast('QR code generated.');
+        } catch (error) {
+          setStatus('Could not encode value', false);
+          if (showToast) toast('This value could not be encoded. Try a shorter value.');
+          console.error('QR generation failed:', error);
+        }
+      }
+      function scheduleGenerate() {
+        clearTimeout(debounce);
+        if ($('autoGenerate').checked) debounce = setTimeout(() => generate(), 180);
+        else {
+          $('charCount').textContent = `${valueInput.value.length} / 4000 characters`;
+          $('inputState').textContent = 'Changes not generated yet';
+        }
+      }
+      $('generateBtn').addEventListener('click', () => generate(true));
+      valueInput.addEventListener('input', scheduleGenerate);
+      ['size','correction','foreground','background','glow'].forEach(id => $(id).addEventListener('change', () => {
+        if ($('autoGenerate').checked || id !== 'glow') generate();
+      }));
+      document.querySelectorAll('[data-example]').forEach(btn => btn.addEventListener('click', () => {
+        valueInput.value = btn.dataset.example; generate(true);
+      }));
+      document.querySelectorAll('.swatch').forEach(btn => btn.addEventListener('click', () => {
+        $('foreground').value = btn.dataset.fg; $('background').value = btn.dataset.bg;
+        document.querySelectorAll('.swatch').forEach(s => s.setAttribute('aria-pressed', String(s === btn)));
+        generate();
+      }));
+      $('clearBtn').addEventListener('click', () => { valueInput.value = ''; generate(); valueInput.focus(); });
+      $('downloadBtn').addEventListener('click', () => {
+        if (!lastValue) return;
+        const canvas = getCanvas();
+        if (!canvas) { toast('QR image is not ready yet.'); return; }
+        const link = document.createElement('a');
+        link.href = canvas.toDataURL('image/png'); link.download = 'qrygen-qr.png';
+        document.body.appendChild(link); link.click(); link.remove();
+      });
+      $('copyBtn').addEventListener('click', async () => {
+        if (!lastValue) return;
+        try { await navigator.clipboard.writeText(lastValue); toast('Encoded content copied.'); }
+        catch { const t = document.createElement('textarea'); t.value = lastValue; document.body.appendChild(t); t.select(); const ok = document.execCommand('copy'); t.remove(); toast(ok ? 'Encoded content copied.' : 'Copy failed. Select the encoded content manually.'); }
+      });
+      $('shareBtn').addEventListener('click', async () => {
+        const payload = valueInput.value;
+        if (!payload) { toast('Enter a value first.'); return; }
+        // The share URL keeps the exact input value in a URL-encoded query parameter.
+        const shareUrl = `${location.origin}/?text=${encodeURIComponent(payload)}`;
+        try { await navigator.clipboard.writeText(shareUrl); toast('Share URL copied.'); }
+        catch { window.prompt('Copy this share URL:', shareUrl); }
+      });
+      $('themeToggle').addEventListener('click', () => {
+        document.documentElement.classList.toggle('light');
+        $('themeToggle').setAttribute('aria-label', document.documentElement.classList.contains('light') ? 'Switch to dark theme' : 'Switch to light theme');
+      });
+      // Wait for deferred QRCode script. If the CDN is slow, retry briefly without blocking UI.
+      function initialRender(attempt = 0) {
+        if (typeof QRCode !== 'undefined') { generate(); return; }
+        if (attempt < 30) { setTimeout(() => initialRender(attempt + 1), 150); return; }
+        setStatus('QR library unavailable', false);
+        $('qrEmpty').innerHTML = '<div style="font-weight:700;margin-bottom:6px">Could not load QR engine</div><div>Check your internet connection and reload this page.</div>';
+      }
+      initialRender();
+    })();
+  </script>
+</body>
+</html>
